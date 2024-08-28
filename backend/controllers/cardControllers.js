@@ -16,8 +16,6 @@ exports.getCards = async (req, res, next) => {
 
 exports.createCard = async (req, res, next) => {
     try {
-        console.log("Heererererere")
-        console.log(req.body);
         const card = await Card.create(req.body);
         console.log(card)
         res.status(201).json({
