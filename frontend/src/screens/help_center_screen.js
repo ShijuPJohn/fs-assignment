@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Card from "../components/card";
 
 function HelpCenterScreen(props) {
     const [cards, setCards] = React.useState([]);
@@ -12,13 +13,16 @@ function HelpCenterScreen(props) {
         axios.get('http://localhost:5000/api/v1/cards')
             .then(response => {
                 console.log(response.data)
-                setCards(response.data);
+                setCards(response.data.data);
                 setLoading(false);
             })
             .catch(error => {
                 setLoading(false);
             });
     }, []);
+    useEffect(() => {
+        console.log("cards", cards)
+    }, [cards])
     return (
         <>
             <div className="title-section-box flex flex-col justify-center items-center h-[40vh] w-full">
@@ -36,8 +40,8 @@ function HelpCenterScreen(props) {
 
                 </div>
             </div>
-            <div className="cards-box flex-grow flex flex-row bg-amber">
-
+            <div className="cards-box flex-grow flex flex-row flex-wrap bg-amber w-[60%]">
+                {cards.map((card) => (<Card card={card}/>))}
             </div>
         </>
     );
