@@ -28,6 +28,23 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.layout{
+
+.layout {
     min-height: 100vh;
+}
+
+.footer-section-box {
+  min-height: 14rem;
+}
+
+.footer-section-title {
+    margin-bottom: .2rem;
+    font-weight: 800;
+}
+
+.footer-section-item {
+    font-size: .7rem;
+}
+.title-section-box{
+    background-color: var(--accent-color);
 }

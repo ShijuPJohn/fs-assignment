@@ -6,7 +6,7 @@ function Layout({children}) {
     return (
         <div className={"layout min-h-full flex flex-col justify-stretch"}>
             <Header/>
-            <div className="content flex-grow">
+            <div className="content min-h-[35rem] flex-grow flex flex-col justify-start items-center">
                 {children}
             </div>
 

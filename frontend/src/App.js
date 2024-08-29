@@ -1,9 +1,10 @@
 import Layout from "./layout/layout";
+import HelpCenterScreen from "./screens/help_center_screen";
 
 function App() {
     return (
         <Layout>
-            <h1>Hellooooo</h1>
+            <HelpCenterScreen/>
         </Layout>
     );
 }
