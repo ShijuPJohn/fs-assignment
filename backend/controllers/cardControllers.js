@@ -1,7 +1,26 @@
 const {Card} = require("../models/models");
+const {Op} = require("sequelize");
+
 exports.getCards = async (req, res, next) => {
     try {
-        const cards = await Card.findAll();
+        const { search } = req.query;
+        console.log(search);
+
+        let cards;
+        if (search) {
+            cards = await Card.findAll({
+                where: {
+                    [Op.or]: [
+                        { title: { [Op.like]: '%' + search + '%' } },
+                        { description: { [Op.like]: '%' + search + '%' } }
+                    ]
+                }
+            });
+            console.log("cards", cards);
+        } else {
+            cards = await Card.findAll();
+        }
+
         res.status(200).json({
             status: 'success',
             data: cards,
@@ -17,13 +36,34 @@ exports.getCards = async (req, res, next) => {
 exports.createCard = async (req, res, next) => {
     try {
         const card = await Card.create(req.body);
-        console.log(card)
         res.status(201).json({
             status: 'success',
             data: card,
         });
     } catch (error) {
         res.status(400).json({
+            status: 'error',
+            msg: error.message,
+        });
+    }
+};
+exports.getCardById = async (req, res, next) => {
+    try {
+        const card = await Card.findByPk(req.params.id);
+
+        if (!card) {
+            return res.status(404).json({
+                status: 'error',
+                msg: 'Card not found',
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: card,
+        });
+    } catch (error) {
+        res.status(500).json({
             status: 'error',
             msg: error.message,
         });

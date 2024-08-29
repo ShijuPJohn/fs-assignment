@@ -1,9 +1,11 @@
 const express = require('express');
 const sequelize = require("./database/database");
 const app = express();
+const cors = require('cors');
 const cardRoutes = require('./routes/cardRoutes');
 
 const PORT = 5000;
+app.use(cors());
 app.use(express.json());
 sequelize.sync()
     .then(() => {
