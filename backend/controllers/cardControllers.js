@@ -3,16 +3,14 @@ const {Op} = require("sequelize");
 
 exports.getCards = async (req, res, next) => {
     try {
-        const { search } = req.query;
-        console.log(search);
-
+        const {search} = req.query;
         let cards;
         if (search) {
             cards = await Card.findAll({
                 where: {
                     [Op.or]: [
-                        { title: { [Op.like]: '%' + search + '%' } },
-                        { description: { [Op.like]: '%' + search + '%' } }
+                        {title: {[Op.like]: '%' + search + '%'}},
+                        {description: {[Op.like]: '%' + search + '%'}}
                     ]
                 }
             });
@@ -20,7 +18,12 @@ exports.getCards = async (req, res, next) => {
         } else {
             cards = await Card.findAll();
         }
-
+        if (!cards.length) {
+            res.status(404).json({
+                status: 'error',
+                msg: "No cards found",
+            });
+        }
         res.status(200).json({
             status: 'success',
             data: cards,
